@@ -1,0 +1,26 @@
+# Scrapy settings
+settings.py
+
+# Scrapy logs
+scrapy.log
+
+# Other log files
+*.log
+
+# Scrapy items
+*.jl
+
+# Scrapy cache
+.scrapy
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# PyInstaller files
+*.spec
+
+# Build artifacts
+build/
+dist/
+venv/
