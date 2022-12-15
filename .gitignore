@@ -1,5 +1,5 @@
 # Scrapy settings
-settings.py
+news/settings.py
 
 # Scrapy logs
 scrapy.log
