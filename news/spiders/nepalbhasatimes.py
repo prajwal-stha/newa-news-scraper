@@ -9,7 +9,7 @@ class NepalBhasaTimesNewsScraperSpider(scrapy.Spider):
         f"7%E0%A5%8D%E0%A4%9F%E0%A5%8D%E0%A4%B0%E0%A4%BF%E0%A4%AF/page/{i}" for i in range(0, 954)]
 
     def __init__(self):
-        self.outfile = open("csv/nepal_bhasa.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("../csv/nepal_bhasa.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news', "date"])
 
@@ -36,7 +36,7 @@ class NepalBhasaTimesForeignNewsScraperSpider(scrapy.Spider):
         f"4%B0%E0%A4%BE%E0%A4%B7%E0%A5%8D%E0%A4%9F%E0%A5%8D%E0%A4%B0%E0%A4%BF%E0%A4%AF/page/0{i}" for i in range(0, 164)]
 
     def __init__(self):
-        self.outfile = open("csv/nepal_bhasa_foreign_news.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("../csv/nepal_bhasa_foreign_news.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news', "date"])
 

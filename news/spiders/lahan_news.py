@@ -11,7 +11,7 @@ class LahanNewsScraperSpider(scrapy.Spider):
     ]
 
     def __init__(self):
-        self.outfile = open("csv/lahan_news.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("../csv/lahan_news.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news','date'])
 
@@ -49,7 +49,7 @@ class LahanForeignNewsScraperSpider(scrapy.Spider):
     ]
 
     def __init__(self):
-        self.outfile = open("csv/lahan_foreign_news.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("../csv/lahan_foreign_news.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news','date'])
 

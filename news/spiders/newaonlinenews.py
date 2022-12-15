@@ -11,7 +11,7 @@ class NewaOnlineNewsScraperSpider(scrapy.Spider):
         f"%E0%A4%AF?page={i} " for i in range(18)
     ]
     def __init__(self):
-        self.outfile = open("csv/newaonlinenews.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("../csv/newaonlinenews.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news',"additional_info"])
 
@@ -49,7 +49,7 @@ class NewaOnlineNewsForeignScraperSpider(scrapy.Spider):
         f"%E0%A4%AF?page={i} " for i in range(18)
     ]
     def __init__(self):
-        self.outfile = open("csv/newaonlinenews.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("../csv/newaonlinenews.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news',"additional_info"])
 
