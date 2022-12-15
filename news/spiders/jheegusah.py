@@ -7,7 +7,7 @@ class JheegushaNewsScraperSpider(scrapy.Spider):
                   f"4%9F%E0%A5%8D%E0%A4%B0%E0%A4%BF%E0%A4%AF?page={i}" for i in range(0,7)]
 
     def __init__(self):
-        self.outfile = open("jheegu_news.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("csv/jheegu_news.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news',"date"])
 
@@ -52,7 +52,7 @@ class JheegushaForeignNewsScraperSpider(scrapy.Spider):
         f"A5%8D%E0%A4%B0%E0%A4%BF%E0%A4%AF?page={i}" for i in range(0, 53)]
 
     def __init__(self):
-        self.outfile = open("jheegu_news_foreign.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("csv/jheegu_news_foreign.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'final_news',"date"])
 
