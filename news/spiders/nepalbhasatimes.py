@@ -98,9 +98,8 @@ class NepalBhasaTimesScraperSpider(scrapy.Spider):
         headline = response.xpath("//div[@class='container']//h1//text()").extract_first()
         final_news = []
 
-        if headline and date_published:
-            for news in response.xpath("//div[@class='blog-single-details']//p//text()").extract():
-                final_news.append(news.replace(' ', ' ').replace(" ", " "))
+        for news in response.xpath("//div[@class='blog-single-details']//p//text()").extract():
+            final_news.append(news.replace(' ', ' ').replace(" ", " ").replace("\n", "").replace("\r", ""))
 
         yield {
             "url": response.url,
@@ -109,3 +108,6 @@ class NepalBhasaTimesScraperSpider(scrapy.Spider):
             'headline': headline,
             'news_text': " ".join(final_news),
         }
+
+
+

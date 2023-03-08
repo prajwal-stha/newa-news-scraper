@@ -5,7 +5,6 @@
 
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
 
 
 class NewsPipeline:
@@ -16,6 +15,8 @@ class NewsPipeline:
 import csv
 import os
 
+from scrapy.exceptions import DropItem
+
 
 class CategoryCsvPipeline:
     def __init__(self):
@@ -23,15 +24,17 @@ class CategoryCsvPipeline:
 
     def process_item(self, item, spider):
         category = item.get('category')
+        if category is None:
+            raise DropItem("Category is not defined for item")
+        folder_name = 'csv_files'
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+        filename = f'{folder_name}/{category}.csv'
         if category not in self.files:
             # Create a new CSV file for this category
-            filename = f'{category}.csv'
-            if os.path.exists(filename):
-                mode = 'a'
-            else:
-                mode = 'w'
+            mode = 'a' if os.path.exists(filename) else 'w'
             file = open(filename, mode, newline='')
-            writer = csv.DictWriter(file, fieldnames=["url", 'category', 'date_published', 'headline', 'news_text'])
+            writer = csv.DictWriter(file, fieldnames=["url",'category', 'date_published', 'headline', 'news_text'])
             if mode == 'w':
                 writer.writeheader()
             self.files[category] = {
