@@ -40,7 +40,7 @@ class NewaOnlineNewsScraperSpider(scrapy.Spider):
 
 
 class NewaOnlineNewsForeignScraperSpider(scrapy.Spider):
-    name = "newa_news"
+    name = "newa_news_foreign"
     custom_settings = dict(LOG_ENABLED = False)
 
 
