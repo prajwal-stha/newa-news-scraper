@@ -12,6 +12,6 @@ Install scrapy and required dependency using
 
 `pip install scrapy`
 
-Navigate to spider folder and run following command to execute one of scrapy file
+Navigate to spider folder and run following command to execute one of scrapy file for example run 
 
 `scrapy crawl newa_news`
