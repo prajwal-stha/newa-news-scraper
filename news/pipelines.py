@@ -26,7 +26,7 @@ class CategoryCsvPipeline:
         category = item.get('category')
         if category is None:
             raise DropItem("Category is not defined for item")
-        folder_name = 'csv_files'
+        folder_name = 'nepal_bhasa_csv_files'
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
         filename = f'{folder_name}/{category}.csv'
@@ -34,7 +34,40 @@ class CategoryCsvPipeline:
             # Create a new CSV file for this category
             mode = 'a' if os.path.exists(filename) else 'w'
             file = open(filename, mode, newline='')
-            writer = csv.DictWriter(file, fieldnames=["url",'category', 'date_published', 'headline', 'news_text'])
+            writer = csv.DictWriter(file, fieldnames=["url", 'category', 'date_published', 'headline', 'news_text'])
+            if mode == 'w':
+                writer.writeheader()
+            self.files[category] = {
+                'file': file,
+                'writer': writer,
+            }
+        # Append the news article to the appropriate CSV file
+        self.files[category]['writer'].writerow(item)
+        return item
+
+    def close_spider(self, spider):
+        # Close all the CSV files
+        for category in self.files:
+            self.files[category]['file'].close()
+
+
+class LahanNewsCategoryCsvPipeline:
+    def __init__(self):
+        self.files = {}
+
+    def process_item(self, item, spider):
+        category = item.get('category')
+        if category is None:
+            raise DropItem("Category is not defined for item")
+        folder_name = 'lahan_news_csv_files'
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+        filename = f'{folder_name}/{category}.csv'
+        if category not in self.files:
+            # Create a new CSV file for this category
+            mode = 'a' if os.path.exists(filename) else 'w'
+            file = open(filename, mode, newline='')
+            writer = csv.DictWriter(file, fieldnames=["url", 'category', 'date', 'headline', 'final_news'])
             if mode == 'w':
                 writer.writeheader()
             self.files[category] = {
