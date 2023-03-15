@@ -67,7 +67,7 @@ class LahanNewsCategoryCsvPipeline:
             # Create a new CSV file for this category
             mode = 'a' if os.path.exists(filename) else 'w'
             file = open(filename, mode, newline='')
-            writer = csv.DictWriter(file, fieldnames=["url", 'category', 'date', 'headline', 'final_news'])
+            writer = csv.DictWriter(file, fieldnames=['category', 'date', 'headline', 'final_news', "url"])
             if mode == 'w':
                 writer.writeheader()
             self.files[category] = {
