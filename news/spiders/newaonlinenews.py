@@ -12,7 +12,7 @@ class NewaOnlineNewsNationalScraperSpider(scrapy.Spider):
     def __init__(self):
         self.outfile = open("newa_online/knowledgable-facts.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
-        self.writer.writerow(['headline', 'final_news', "additional_info",'url'])
+        self.writer.writerow(['headline', 'final_news', "additional_info", 'url'])
 
     def close(self, reason):
         self.outfile.close()
@@ -31,7 +31,7 @@ class NewaOnlineNewsNationalScraperSpider(scrapy.Spider):
                                    "))]//text()").extract():
             final_news.append(news.replace(' ', ' ').replace(" ", " "))
         if len(final_news) > 0:
-            self.writer.writerow([" ".join(headline), " ".join(final_news), " ".join(additional_info),response.url])
+            self.writer.writerow([" ".join(headline), " ".join(final_news), " ".join(additional_info), response.url])
         yield {'headline': " ".join(headline), 'final_news': " ".join(final_news),
                "additional_info": " ".join(additional_info)}
 
@@ -59,7 +59,6 @@ class NewaOnlineNewsForeignScraperSpider(scrapy.Spider):
                                  callback=self.get_news)
 
     def get_news(self, response):
-
         headline = response.xpath("//div[@class='inner-news-title']//h2//text()").extract()
         additional_info = response.xpath("(//div[@class='cms-content']//p)[1]//text()").extract()
         final_news = []
@@ -92,9 +91,9 @@ class NewaOnlineNewsScraper(scrapy.Spider):
         page_number = 0
         page_url = f"{pagination_url}?page={page_number}"
         if not response.xpath("//ul[@class='pager pagination']//li[@class='pager-next last']//a"):
-            page_number+=1
+            page_number += 1
             print(response.url + page_url)
             yield scrapy.Request(url=response.url + page_url, callback=self.get_individual_category)
 
     def get_news(self, response):
-        print(response.url)
+        pass
