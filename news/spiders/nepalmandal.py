@@ -6,10 +6,10 @@ import scrapy
 
 class NepalMandal(scrapy.Spider):
     name = 'nepalmandal'
-    start_urls = [f"http://www.nepalmandal.com/cat/23/{i}.html" for i in range(0, 70)]
+    start_urls = [f"http://www.nepalmandal.com/cat/59/{i}.html" for i in range(0, 25)]
     custom_settings = dict(LOG_ENABLED=False)
     def __init__(self):
-        self.outfile = open("nepal_mandal/सम्पादकीय.csv", "w", newline="", encoding="utf-8-sig")
+        self.outfile = open("nepal_mandal/मू बुखँ.csv", "w", newline="", encoding="utf-8-sig")
         self.writer = csv.writer(self.outfile)
         self.writer.writerow(['headline', 'date', 'final_news','url'])
 
