@@ -83,7 +83,7 @@ class LahanNewsScraperSpider(scrapy.Spider):
     class to extarct news of lahan website
     """
     name = 'lahan_news'
-    custom_settings = {'LOG_ENABLED': False, 'ITEM_PIPELINES': {'news.pipelines.LahanNewsCategoryCsvPipeline': 401}}
+    custom_settings = {'LOG_ENABLED': True, 'ITEM_PIPELINES': {'news.pipelines.LahanNewsCategoryCsvPipeline': 401}}
     # custom_settings = {'LOG_ENABLED': False}
     start_urls = ["https://www.lahananews.com/"]
 
@@ -94,7 +94,8 @@ class LahanNewsScraperSpider(scrapy.Spider):
         :param kwargs:
         :return:
         """
-        for link in response.xpath("//li[@class='expanded leaf']//ul//li//a"):
+        for link in response.xpath("//li[@class='expanded leaf']//ul//li//a |"
+                                   " //*[@id='bs-example-navbar-collapse-1']/ul/li[6]/a"):
             href = link.attrib['href']
             url = urljoin(response.url, href)
             yield scrapy.Request(url=url, callback=self.get_news_category)
@@ -134,7 +135,14 @@ class LahanNewsScraperSpider(scrapy.Spider):
         """
         headline = (response.xpath("//div[@class='news-section-title']//h2//text()").extract())
         date = response.xpath("//div[@class='content']/p//text()").extract()
-        new_date = list(map(lambda x: x.strip(), filter(lambda x: x.strip() != "", date)))
+        text = ''.join(date)  # merge the list into a string
+        text_list = [word.strip() for word in text.split('|')]  # remove extra whitespace from each word
+        try:
+            author = text_list[0]
+            date = text_list[1]
+        except:
+            date = text_list[0]
+            author = None
 
         category = response.meta.get('news_category')
 
@@ -145,7 +153,8 @@ class LahanNewsScraperSpider(scrapy.Spider):
 
             yield ({'headline': " ".join(headline),
                     'final_news': " ".join(final_news),
-                    "date": " ".join(new_date),
+                    "date": date,
+                    "author": author,
                     "category": category,
                     "url": response.url
                     })
@@ -155,7 +164,8 @@ class LahanNewsScraperSpider(scrapy.Spider):
                 final_news.append(news.replace(' ', ' ').replace(" ", " ").replace("\n", ""))
             yield {'headline': " ".join(headline),
                    'final_news': " ".join(final_news),
-                   "date": " ".join(new_date),
+                   "date": date,
+                   "author": author,
                    "category": category,
                    "url": response.url
                    }

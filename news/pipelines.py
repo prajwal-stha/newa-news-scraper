@@ -34,7 +34,8 @@ class CategoryCsvPipeline:
             # Create a new CSV file for this category
             mode = 'a' if os.path.exists(filename) else 'w'
             file = open(filename, mode, newline='')
-            writer = csv.DictWriter(file, fieldnames=["url", 'category', 'date_published', 'headline', 'news_text'])
+            writer = csv.DictWriter(file, fieldnames=["url", 'category', 'author', 'date', 'date_published', 'headline',
+                                                      'news_text'])
             if mode == 'w':
                 writer.writeheader()
             self.files[category] = {
@@ -62,12 +63,14 @@ class LahanNewsCategoryCsvPipeline:
         folder_name = 'lahan_news_csv_files'
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
+        if category == 'च्वसु/बिचा:':
+            category = category.split('/')[0]
         filename = f'{folder_name}/{category}.csv'
         if category not in self.files:
             # Create a new CSV file for this category
             mode = 'a' if os.path.exists(filename) else 'w'
             file = open(filename, mode, newline='')
-            writer = csv.DictWriter(file, fieldnames=['category', 'date', 'headline', 'final_news', "url"])
+            writer = csv.DictWriter(file, fieldnames=['category', 'author', 'date', 'headline', 'final_news', "url"])
             if mode == 'w':
                 writer.writeheader()
             self.files[category] = {
