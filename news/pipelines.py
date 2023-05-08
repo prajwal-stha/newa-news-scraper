@@ -64,7 +64,7 @@ class LahanNewsCategoryCsvPipeline:
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
         if category == 'च्वसु/बिचा:':
-            category = category.split('/')[0]
+            category = category.split('/')[1]
         filename = f'{folder_name}/{category}.csv'
         if category not in self.files:
             # Create a new CSV file for this category
