@@ -1,4 +1,13 @@
-- name: Upload coverage reports to Codecov
+name: CI/CD
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop]
+jobs:
+  upload-code-cov-artifacts:
+    runs-on: ubuntu-latest
+    steps:- name: Upload coverage reports to Codecov
   uses: codecov/codecov-action@v3
   env:
     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
